@@ -146,7 +146,8 @@ struct Meta: ::testing::Test {
         entt::meta<double>().conv<int>();
 
         entt::meta<char>()
-                .type("char"_hs, std::make_pair(properties::prop_int, 42))
+                .type("char"_hs)
+                    .prop<entt::property<properties::prop_int, 42>>()
                 .data<&set<char>, &get<char>>("value"_hs);
 
         entt::meta<properties>()
@@ -160,10 +161,13 @@ struct Meta: ::testing::Test {
                 .type("base"_hs);
 
         entt::meta<derived_type>()
-                .type("derived"_hs, std::make_pair(properties::prop_int, 99))
+                .type("derived"_hs)
+                    .prop<entt::property<properties::prop_int, 99>>()
                 .base<base_type>()
-                .ctor<const base_type &, int, char>(std::make_pair(properties::prop_bool, false))
-                .ctor<&derived_factory>(std::make_pair(properties::prop_int, 42))
+                .ctor<const base_type &, int, char>()
+                    .prop<entt::property<properties::prop_bool, false>>()
+                .ctor<&derived_factory>()
+                    .prop<entt::property<properties::prop_int, 42>>()
                 .conv<&derived_type::f>()
                 .conv<&derived_type::g>();
 
@@ -178,10 +182,14 @@ struct Meta: ::testing::Test {
 
         entt::meta<data_type>()
                 .type("data"_hs)
-                .data<&data_type::i, entt::as_alias_t>("i"_hs, std::make_pair(properties::prop_int, 0))
-                .data<&data_type::j>("j"_hs, std::make_pair(properties::prop_int, 1))
-                .data<&data_type::h>("h"_hs, std::make_pair(properties::prop_int, 2))
-                .data<&data_type::k>("k"_hs, std::make_pair(properties::prop_int, 3))
+                .data<&data_type::i, entt::as_alias_t>("i"_hs)
+                    .prop<entt::property<properties::prop_int, 0>>()
+                .data<&data_type::j>("j"_hs)
+                    .prop<entt::property<properties::prop_int, 1>>()
+                .data<&data_type::h>("h"_hs)
+                    .prop<entt::property<properties::prop_int, 2>>()
+                .data<&data_type::k>("k"_hs)
+                    .prop<entt::property<properties::prop_int, 3>>()
                 .data<&data_type::empty>("empty"_hs)
                 .data<&data_type::v, entt::as_void_t>("v"_hs);
 
@@ -193,11 +201,16 @@ struct Meta: ::testing::Test {
         entt::meta<func_type>()
                 .type("func"_hs)
                 .func<entt::overload<int(const base_type &, int, int)>(&func_type::f)>("f3"_hs)
-                .func<entt::overload<int(int, int)>(&func_type::f)>("f2"_hs, std::make_pair(properties::prop_bool, false))
-                .func<entt::overload<int(int) const>(&func_type::f)>("f1"_hs, std::make_pair(properties::prop_bool, false))
-                .func<&func_type::g>("g"_hs, std::make_pair(properties::prop_bool, false))
-                .func<&func_type::h>("h"_hs, std::make_pair(properties::prop_bool, false))
-                .func<&func_type::k>("k"_hs, std::make_pair(properties::prop_bool, false))
+                .func<entt::overload<int(int, int)>(&func_type::f)>("f2"_hs)
+                    .prop<entt::property<properties::prop_bool, false>>()
+                .func<entt::overload<int(int) const>(&func_type::f)>("f1"_hs)
+                    .prop<entt::property<properties::prop_bool, false>>()
+                .func<&func_type::g>("g"_hs)
+                    .prop<entt::property<properties::prop_bool, false>>()
+                .func<&func_type::h>("h"_hs)
+                    .prop<entt::property<properties::prop_bool, false>>()
+                .func<&func_type::k>("k"_hs)
+                    .prop<entt::property<properties::prop_bool, false>>()
                 .func<&func_type::v, entt::as_void_t>("v"_hs)
                 .func<&func_type::a, entt::as_alias_t>("a"_hs);
 
@@ -209,13 +222,15 @@ struct Meta: ::testing::Test {
                 .data<&setter_getter_type::setter_with_ref, &setter_getter_type::getter_with_ref>("w"_hs);
 
         entt::meta<an_abstract_type>()
-                .type("an_abstract_type"_hs, std::make_pair(properties::prop_bool, false))
+                .type("an_abstract_type"_hs)
+                    .prop<entt::property<properties::prop_bool, false>>()
                 .data<&an_abstract_type::i>("i"_hs)
                 .func<&an_abstract_type::f>("f"_hs)
                 .func<&an_abstract_type::g>("g"_hs);
 
         entt::meta<another_abstract_type>()
-                .type("another_abstract_type"_hs, std::make_pair(properties::prop_int, 42))
+                .type("another_abstract_type"_hs)
+                    .prop<entt::property<properties::prop_int, 42>>()
                 .data<&another_abstract_type::j>("j"_hs)
                 .func<&another_abstract_type::h>("h"_hs);
 
@@ -230,7 +245,8 @@ struct Meta: ::testing::Test {
         entt::meta<double>().conv<float>();
 
         entt::meta<derived_type>()
-                .type("my_type"_hs, std::make_pair(properties::prop_bool, false))
+                .type("my_type"_hs)
+                    .prop<entt::property<properties::prop_bool, false>>()
                 .ctor<>();
 
         entt::meta<another_abstract_type>()
